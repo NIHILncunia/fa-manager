@@ -9,6 +9,4 @@ const pcFullName = {
   미루바: '미루바',
 };
 
-exports = {
-  pcFullName,
-}
+exports.pcFullName = pcFullName;

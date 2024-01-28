@@ -45,14 +45,14 @@ module.exports = {
       status: 'CLOSE',
     })
 
-    const { data: sessions, } = await api.get(`/session/id/${campain.id}`);
+    const { data: sessions, } = await api.get(`/session/campain/${campain.id}`);
 
     const embed = new EmbedBuilder()
       .setColor('Red')
       .setFields([
         {
           name: '캠페인 종료',
-          value: `[${updateCampain.name}] 캠페인이`
+          value: `[${updateCampain.name}] 캠페인이 `
             + `**${sessions.length}**번의 세션을 진행하고 종료되었습니다.`,
 
         },

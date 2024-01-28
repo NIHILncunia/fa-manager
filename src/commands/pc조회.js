@@ -49,7 +49,7 @@ module.exports = {
       return;
     }
 
-    const pc = await findPC(pcName);
+    const pc = await findPC(campain.id, pcName);
 
     if ('data' in pc) {
       const embed = new EmbedBuilder()

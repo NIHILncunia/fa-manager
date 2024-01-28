@@ -22,9 +22,7 @@ const findSession = async (campainId, sessionNumber) => {
   return data;
 }
 
-exports = {
-  api,
-  findCampain,
-  findPC,
-  findSession,
-};
+exports.api = api;
+exports.findCampain = findCampain;
+exports.findSession = findSession;
+exports.findPC = findPC;

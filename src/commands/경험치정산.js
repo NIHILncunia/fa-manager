@@ -90,15 +90,10 @@ module.exports = {
       // eslint-disable-next-line no-await-in-loop
       const pc = await findPC(campain.id, pcName);
 
-      if (pc) {
-        pcList.push(pc);
-      } else {
-        pcList.push('없음');
-      }
+      pcList.push(pc);
     }
 
     const topLevel = pcList
-      .filter((item) => item !== '없음')
       .sort((a, b) => {
         const aLevel = a.level;
         const bLevel = b.level;
@@ -111,20 +106,9 @@ module.exports = {
     const low2BonusExp = sessionExp * 2;
     const low3BonusExp = sessionExp + Math.floor(sessionExp * 1.5);
 
-    const masterBonusExp = sessionExp + (sessionExp * 1.5);
-    let gmPCGainExp;
+    let gmPCGainExp = sessionExp * 1.5;
 
     const gmPC = await findPC(campain.id, session.bonus_pc);
-
-    if (topLevel === gmPC.level) {
-      gmPCGainExp = masterBonusExp;
-    } else if (topLevel - 1 === gmPC.level) {
-      gmPCGainExp = masterBonusExp > low1BonusExp ? masterBonusExp : low1BonusExp;
-    } else if (topLevel - 2 === gmPC.level) {
-      gmPCGainExp = masterBonusExp > low2BonusExp ? masterBonusExp : low2BonusExp;
-    } else {
-      gmPCGainExp = masterBonusExp > low3BonusExp ? masterBonusExp : low3BonusExp;
-    }
 
     if (gmPC.name === '리르갈') {
       gmPCGainExp = normalExp;
@@ -142,43 +126,26 @@ module.exports = {
     const updatePCList = [];
 
     for (const pc of pcList) {
-      let newExp;
-      let newLevel;
+      let pcGainExp;
 
       if (topLevel === pc.level) {
-        newExp = (pc.exp + normalExp) >= 100
-          ? (pc.exp + normalExp) - 100
-          : pc.exp + normalExp;
-        newLevel = (pc.exp + normalExp) >= 100
-          ? pc.level + 1
-          : pc.level;
+        pcGainExp = normalExp;
       } else if (topLevel - 1 === pc.level) {
-        newExp = (pc.exp + low1BonusExp) >= 100
-          ? (pc.exp + low1BonusExp) - 100
-          : pc.exp + low1BonusExp;
-        newLevel = (pc.exp + low1BonusExp) >= 100
-          ? pc.level + 1
-          : pc.level;
+        pcGainExp = low1BonusExp;
       } else if (topLevel - 2 === pc.level) {
-        newExp = (pc.exp + low2BonusExp) >= 100
-          ? (pc.exp + low2BonusExp) - 100
-          : pc.exp + low2BonusExp;
-        newLevel = (pc.exp + low2BonusExp) >= 100
-          ? pc.level + 1
-          : pc.level;
+        pcGainExp = low2BonusExp;
       } else {
-        newExp = (pc.exp + low3BonusExp) >= 100
-          ? (pc.exp + low3BonusExp) - 100
-          : pc.exp + low3BonusExp;
-        newLevel = (pc.exp + low3BonusExp) >= 100
-          ? pc.level + 1
-          : pc.level;
+        pcGainExp = low3BonusExp;
       }
 
       // eslint-disable-next-line no-await-in-loop
-      const { data: updatePC, } = await api.patch(`/player/id/${gmPC.id}`, {
-        exp: newExp,
-        level: newLevel,
+      const { data: updatePC, } = await api.patch(`/player/id/${pc.id}`, {
+        exp: (pc.exp + pcGainExp) >= 100
+          ? (pc.exp + pcGainExp) - 100
+          : pc.exp + pcGainExp,
+        level: (pc.exp + pcGainExp) >= 100
+          ? pc.level + 1
+          : pc.level,
       })
 
       updatePCList.push(updatePC);

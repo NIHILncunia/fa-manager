@@ -2,7 +2,7 @@
   "name": "nihil-discord14-template",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nihil-template/nihil-discord14-template.git"
@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/nihil-template/nihil-discord14-template#readme",
   "scripts": {
-    "start": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));' src/index.ts"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "NIHILncunia",

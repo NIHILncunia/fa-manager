@@ -67,7 +67,7 @@ module.exports = {
       return;
     }
 
-    const pc = await findPC(pcName);
+    const pc = await findPC(campain.id, pcName);
 
     if ('data' in pc) {
       const embed = new EmbedBuilder()
@@ -92,9 +92,15 @@ module.exports = {
       play_token: token,
     });
 
-    const levelString = level ? `[${updatePC.name}] [레벨 ${updatePC.level}](으)로 변경\n` : '';
-    const expString = exp ? `[${updatePC.name}] [경험치 ${updatePC.exp}%]로 변경\n` : '';
-    const tokenString = token !== undefined ? `[${updatePC.name}] [안식일 토큰 ${updatePC.play_token}개]로 변경` : '';
+    const levelString = level
+      ? `[${updatePC.name}] [레벨 ${updatePC.level}](으)로 변경\n`
+      : '';
+    const expString = exp
+      ? `[${updatePC.name}] [경험치 ${updatePC.exp}%]로 변경\n`
+      : '';
+    const tokenString = token !== undefined
+      ? `[${updatePC.name}] [안식일 토큰 ${updatePC.play_token}개]로 변경`
+      : '';
 
     const embed = new EmbedBuilder()
       .setColor('Red')

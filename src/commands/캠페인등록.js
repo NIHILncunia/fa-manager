@@ -25,7 +25,7 @@ module.exports = {
 
     const campain = await findCampain(campainName);
 
-    if (campain) {
+    if (campain.data) {
       const embed = new EmbedBuilder()
         .setColor('Red')
         .setFields([

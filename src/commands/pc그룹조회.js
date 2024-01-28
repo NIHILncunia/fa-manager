@@ -55,10 +55,10 @@ module.exports = {
       // eslint-disable-next-line no-await-in-loop
       const pc = await findPC(campain.id, pcName);
 
-      if (pc) {
-        pcList.push(pc);
+      if ('data' in pc) {
+        pcList.push(pcName);
       } else {
-        pcList.push('없음');
+        pcList.push(pc);
       }
     }
 
@@ -68,12 +68,10 @@ module.exports = {
         {
           name: '조회완료',
           value: pcList.map((pc) => {
-            if (pc !== '없음') {
-              // eslint-disable-next-line no-unused-expressions
-              `[${pc.name}] 레벨 ${pc.level} (${pc.exp}%)\n- 참여 횟수 ${pc.play_count}회 안식일 토큰 ${pc.play_token}개\n\n`;
+            if (typeof pc === 'string') {
+              return `[${pc}]\n- 찾을 수 없음`;
             } else {
-              // eslint-disable-next-line no-unused-expressions
-              `[찾을 수 없음]`;
+              return `[${pc.name}] 레벨 ${pc.level} (${pc.exp}%)\n- 참여 횟수 ${pc.play_count}회\n- 안식일 토큰 ${pc.play_token}개\n\n`;
             }
           }).join(''),
         },

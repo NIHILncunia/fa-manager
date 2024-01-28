@@ -72,7 +72,7 @@ module.exports = {
       .setFields([
         {
           name: `[${session.number.toString().padStart(3, '0')} - ${session.name}]`,
-          value: `- 마스터 [${session.gm}]\n- 참여 PC [${session.pc}]\n- 세션 경험치 [${session.exp}%]`,
+          value: `- 마스터 [${session.gm}]\n- 참여 PC [${session.pc || ''}]\n- 세션 경험치 [${session.exp}%]`,
         },
       ]);
 
